@@ -10,6 +10,7 @@ document.getElementById('apiRequestForm').addEventListener('submit', async funct
     try {
         const response = await fetch(`https://glov-api.msertactoroz.workers.dev/?stream=${stream}`, {
             method: 'GET',
+            mode: 'no-cors',
             headers: {
                 'Authorization': `Bearer USER${userId}`
             }
