@@ -5,7 +5,7 @@ const visitCounts = new Map();
 const streamSeqNumbers = new Map();
 const lastRequestTimes = new Map();
 
-async function handleRequest(request, env, ctx) {
+async function handleRequest(request) {
     const url = new URL(request.url);
     const { searchParams } = url;
 
@@ -14,11 +14,11 @@ async function handleRequest(request, env, ctx) {
 
     // Check if Authorization header is present
     const authorizationHeader = request.headers.get("Authorization");
-    if (!authorizationHeader || !authorizationHeader.startsWith("Bearer USER")) {
+    if (!authorizationHeader || !authorizationHeader.startsWith("bearer USER")) {
         return new Response("Unauthorized", { status: 401 });
     }
 
-    const userIdMatch = authorizationHeader.match(/USER(\d{3})/);
+    const userIdMatch = authorizationHeader.match(/bearer USER(\d{3})/);
     if (!userIdMatch) {
         return new Response("Unauthorized", { status: 401 });
     }
@@ -81,6 +81,6 @@ function hashStringToInt(str) {
     return Math.abs(hash);
 }
 
-module.exports = {
-    fetch: handleRequest,
-};
+addEventListener("fetch", event => {
+    event.respondWith(handleRequest(event.request));
+});
