@@ -12,11 +12,12 @@ document.getElementById('apiRequestForm').addEventListener('submit', async funct
     responseContainer.innerHTML = 'Loading...';
 
     try {
-        const response = await fetch(`https://glov-api.msertactoroz.workers.dev/?stream=${stream}`, {
+        const response = await fetch(`https://glov-api.msertactoroz.workers.dev`, {
+            // const response = await fetch(`https://glov-api.msertactoroz.workers.dev/?stream=${stream}`, {
             method: 'GET',
             headers: {
                 'Authorization': `USER${userId}`,
-                // 'strean': `${stream}`
+                'stream': `${stream}`
             },
             mode: 'no-cors'
         });
@@ -25,5 +26,6 @@ document.getElementById('apiRequestForm').addEventListener('submit', async funct
         responseContainer.innerHTML = JSON.stringify(responseData, null, 2);
     } catch (error) {
         responseContainer.innerHTML = `Error: ${error.message}`;
+
     }
 });

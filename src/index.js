@@ -5,7 +5,14 @@ const visitCounts = new Map();
 const streamSeqNumbers = new Map();
 const lastRequestTimes = new Map();
 
+addEventListener("fetch", event => {
+    event.respondWith(handleRequest(event.request));
+});
+
 async function handleRequest(request) {
+    // Log the request
+    console.log("Received request:", request);
+
     const url = new URL(request.url);
     const { searchParams } = url;
 
@@ -80,7 +87,3 @@ function hashStringToInt(str) {
     }
     return Math.abs(hash);
 }
-
-addEventListener("fetch", event => {
-    event.respondWith(handleRequest(event.request));
-});
