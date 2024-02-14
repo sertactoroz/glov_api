@@ -12,12 +12,11 @@ document.getElementById('apiRequestForm').addEventListener('submit', async funct
     responseContainer.innerHTML = 'Loading...';
 
     try {
-        const response = await fetch(`https://glov-api.msertactoroz.workers.dev`, {
-            // const response = await fetch(`https://glov-api.msertactoroz.workers.dev/?stream=${stream}`, {
+        // const response = await fetch(`https://glov-api.msertactoroz.workers.dev`, {
+        const response = await fetch(`https://glov-api.msertactoroz.workers.dev/?stream=${stream}`, {
             method: 'GET',
             headers: {
                 'Authorization': `USER${userId}`,
-                'stream': `${stream}`
             },
             mode: 'no-cors'
         });
