@@ -1,14 +1,13 @@
-interface Env {}
-
 const RATE_LIMIT_WINDOW = 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 4;
 
-const visitCounts = new Map<string, number>();
-const streamSeqNumbers = new Map<string, number>();
-const lastRequestTimes = new Map<string, number>();
+const visitCounts = new Map();
+const streamSeqNumbers = new Map();
+const lastRequestTimes = new Map();
 
-async function handleRequest(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    const { searchParams } = new URL(request.url);
+async function handleRequest(request, env, ctx) {
+    const url = new URL(request.url);
+    const { searchParams } = url;
 
     // Check if "stream" parameter exists and its value
     const stream = searchParams.get("stream") === "true";
@@ -61,16 +60,18 @@ async function handleRequest(request: Request, env: Env, ctx: ExecutionContext):
         await new Promise(resolve => setTimeout(resolve, 1000));
     }
 
-    return new Response(JSON.stringify(responsePayload), {      headers: {
-		"Content-Type": "application/json",
-		"Access-Control-Allow-Origin": "*", 
-		"Access-Control-Allow-Methods": "GET", 
-		"Access-Control-Allow-Headers": "Authorization", 
-	}, });
+    return new Response(JSON.stringify(responsePayload), {
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET",
+            "Access-Control-Allow-Headers": "Authorization",
+        },
+    });
 }
 
 // Hash string to int for consistent grouping
-function hashStringToInt(str: string): number {
+function hashStringToInt(str) {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
         const char = str.charCodeAt(i);
@@ -80,6 +81,6 @@ function hashStringToInt(str: string): number {
     return Math.abs(hash);
 }
 
-export default {
+module.exports = {
     fetch: handleRequest,
 };

@@ -12,7 +12,7 @@ document.getElementById('apiRequestForm').addEventListener('submit', async funct
             method: 'GET',
             mode: 'no-cors',
             headers: {
-                'Authorization': `Bearer USER${userId}`
+                'Authorization': `USER${userId}`
             }
         });
 
