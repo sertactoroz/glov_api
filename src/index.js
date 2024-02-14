@@ -14,11 +14,11 @@ async function handleRequest(request) {
 
     // Check if Authorization header is present
     const authorizationHeader = request.headers.get("Authorization");
-    if (!authorizationHeader || !authorizationHeader.startsWith("bearer USER")) {
+    if (!authorizationHeader || !authorizationHeader.startsWith("USER")) {
         return new Response("Unauthorized", { status: 401 });
     }
 
-    const userIdMatch = authorizationHeader.match(/bearer USER(\d{3})/);
+    const userIdMatch = authorizationHeader.match(/USER(\d{3})/);
     if (!userIdMatch) {
         return new Response("Unauthorized", { status: 401 });
     }

@@ -1,3 +1,7 @@
+async function handleRequest(request) {
+    console.log("Received request:", request);
+}
+
 document.getElementById('apiRequestForm').addEventListener('submit', async function (event) {
     event.preventDefault();
 
@@ -10,10 +14,11 @@ document.getElementById('apiRequestForm').addEventListener('submit', async funct
     try {
         const response = await fetch(`https://glov-api.msertactoroz.workers.dev/?stream=${stream}`, {
             method: 'GET',
-            mode: 'no-cors',
             headers: {
-                'Authorization': `bearer USER${userId}`
-            }
+                'Authorization': `USER${userId}`,
+                // 'strean': `${stream}`
+            },
+            mode: 'no-cors'
         });
 
         const responseData = await response.json();
@@ -22,28 +27,3 @@ document.getElementById('apiRequestForm').addEventListener('submit', async funct
         responseContainer.innerHTML = `Error: ${error.message}`;
     }
 });
-
-// document.getElementById('apiRequestForm').addEventListener('submit', async function (event) {
-//     event.preventDefault();
-
-//     const userId = document.getElementById('userId').value;
-//     const stream = document.getElementById('stream').value;
-
-//     const responseContainer = document.getElementById('responseContainer');
-//     responseContainer.innerHTML = 'Loading...';
-
-//     try {
-//         const response = await fetch(`https://glov-api.msertactoroz.workers.dev/?stream=${stream}`, {
-//             method: 'GET',
-//             mode: 'no-cors',
-//             headers: {
-//                 'Authorization': `Bearer USER${userId}`
-//             }
-//         });
-
-//         const responseData = await response.json();
-//         responseContainer.innerHTML = JSON.stringify(responseData, null, 2);
-//     } catch (error) {
-//         responseContainer.innerHTML = `Error: ${error.message}`;
-//     }
-// });
